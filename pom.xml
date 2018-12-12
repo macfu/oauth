@@ -28,7 +28,7 @@
         <mysql.version>5.1.5</mysql.version>
         <!-- 【BEFORE】配置Spring的版本管理【BEFORE】 -->
         <spring.version>5.0.0.RELEASE</spring.version>
-        <jackson.version>2.9.2</jackson.version>
+        <jackson.version>2.9.5</jackson.version>
         <!-- 【AFTER】配置Spring的版本管理【AFTER】 -->
         <jstl.version>1.2</jstl.version>
         <servlet-api.version>4.0.0</servlet-api.version>
