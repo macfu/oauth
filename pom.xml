@@ -13,6 +13,7 @@
         <module>oauth-service</module>
         <module>oauth-util</module>
         <module>oauth-ssm-base</module>
+        <module>oauth-ssm-cache</module>
     </modules>
 
 
