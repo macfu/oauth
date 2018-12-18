@@ -28,6 +28,16 @@
 
     <!-- 定义项目之中要是使用的认证与授权处理的Realm对象,该对象一定要配置到安全管理器之中 -->
     <bean id="memberRealm" class="com.macfu.ssm.realm.MemberRealm">
+        <!-- 启用缓存 -->
+        <property name="cachingEnabled" value="true"/>
+        <!-- 启用认证缓存 -->
+        <property name="authenticationCachingEnabled" value="true"/>
+        <!--  -->
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <!-- 启用授权缓存 -->
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+
         <property name="credentialsMatcher">
             <bean class="com.macfu.ssm.realm.matcher.DefaultCredentialsMatcher"/>
         </property>
