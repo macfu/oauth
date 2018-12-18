@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @Author: liming
  * @Date: 2018/12/17 14:57
- * @Description:
+ * @Description: Redis操作工具类
  */
 public abstract class AbstractRedisCache<K, V> implements Cache<K, V> {
     private JedisConnectionFactory connectionFactory;
