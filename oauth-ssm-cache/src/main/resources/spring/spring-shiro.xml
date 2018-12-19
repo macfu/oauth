@@ -24,6 +24,8 @@
                 <entry key="authorizationCache" value-ref="connectionFactoryAuthorization"/>
                 <!-- 配置Session的缓存连接池 -->
                 <entry key="activeSessionCache" value-ref="connectionFactoryActiveSessionCache"/>
+                <!-- 配置密码尝试次数的数据库连接 -->
+                <entry key="retryCount" value-ref="connectionFactoryRetryCount"/>
             </map>
         </property>
     </bean>
@@ -56,7 +58,11 @@
         <!-- 设置授权缓存的名字，该缓存统一通过RedisCacheManager管理 -->
         <property name="authorizationCacheName" value="authorizationCache"/>
         <property name="credentialsMatcher">
-            <bean class="com.macfu.ssm.realm.matcher.DefaultCredentialsMatcher"/>
+            <bean class="com.macfu.ssm.realm.matcher.DefaultCredentialsMatcher">
+                <property name="cacheManager" ref="cacheManager"/>
+                <property name="expire" value="${shiro.retry.expire}"/>
+                <property name="maxRetryCount" value="${shiro.retry.max}"/>
+            </bean>
         </property>
     </bean>
 
