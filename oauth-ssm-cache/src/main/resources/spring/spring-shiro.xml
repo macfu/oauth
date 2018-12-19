@@ -26,6 +26,8 @@
                 <entry key="activeSessionCache" value-ref="connectionFactoryActiveSessionCache"/>
                 <!-- 配置密码尝试次数的数据库连接 -->
                 <entry key="retryCount" value-ref="connectionFactoryRetryCount"/>
+                <!-- 配置剔除数据的处理操作 -->
+                <entry key="kickout" value-ref="connectionFactoryKickout"/>
             </map>
         </property>
     </bean>
@@ -148,6 +150,8 @@
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
                 <!-- 执行了注销的操作过滤时，会执行次过滤配置类 -->
                 <entry key="logout" value-ref="logoutFilter"/>
+                <!-- 增加踢出重复的Session过滤操作 -->
+                <entry key="kickout" value-ref="kickoutFilter"/>
             </map>
         </property>
         <!-- 定义所有访问路径处理规则 -->
@@ -155,9 +159,19 @@
             <value>
                 /logout.page=logout
                 /loginForm.aciton=authc
-                /pages/**=authc
+                /pages/**=authc,kickout
             </value>
         </property>
+    </bean>
+
+    <!-- 定义踢出的过滤器 -->
+    <bean id="kickoutFilter" class="com.macfu.ssm.filter.KickoutSessionControllerFilter">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <!-- 踢出后的路径 -->
+        <property name="kickoutUrl" value="/loginForm.action"/>
+        <!-- 只允许一个用户访问 -->
+        <property name="maxSessionCount" value="1"/>
     </bean>
 
 </beans>

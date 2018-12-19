@@ -74,4 +74,19 @@
         <property name="timeout" value="${redis.timeout}"/>
         <property name="database" value="${redis.db.retryCount}"/>
     </bean>
+
+    <!-- 保存当前用户信息的队列缓存 -->
+    <bean id="connectionFactoryKickout" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!-- 引用连接池的配置项 -->
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+        <!-- redis连接地址 -->
+        <property name="hostName" value="${redis.host}"/>
+        <!-- redis连接端口 -->
+        <property name="port" value="${redis.port}"/>
+        <!-- redis连接密码 -->
+        <property name="password" value="${redis.password}"/>
+        <!-- 连接的超时时间 -->
+        <property name="timeout" value="${redis.timeout}"/>
+        <property name="database" value="${redis.db.kickout}"/>
+    </bean>
 </beans>
