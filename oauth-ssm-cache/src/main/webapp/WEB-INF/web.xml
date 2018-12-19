@@ -3,10 +3,10 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-	<display-name>mldnshiro-ssm-web</display-name>
+	<display-name>macfushiro-ssm-web</display-name>
 	<error-page>
 		<error-code>500</error-code>
-        <!-- 此时配置的errors.action需要在controller包中配置 -->
+        <!-- 此时配置的errors.action需要在controller包中配置映射路径 -->
 		<location>/errors.action</location>
 	</error-page>
 	<error-page>
@@ -29,8 +29,7 @@
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>	<!-- Spring之中定义的属性名称 -->
-		<param-value>classpath:spring/spring-*.xml</param-value><!-- 
-			资源文件 -->
+		<param-value>classpath:spring/spring-*.xml</param-value><!-- 资源文件 -->
 	</context-param>
 	
 	<filter>

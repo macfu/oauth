@@ -1,4 +1,4 @@
-package com.macfu.utils.cache.abs;
+package com.macfu.ssm.utils.cache.abs;
 
 import com.google.common.collect.Sets;
 import org.apache.shiro.cache.Cache;

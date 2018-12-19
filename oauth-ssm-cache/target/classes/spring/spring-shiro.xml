@@ -6,23 +6,18 @@
 
     <!-- 定义注解，必须配置好扫描包之后才可以扫描该包中所有类上出现的注解信息 -->
     <context:component-scan base-package="com.macfu"/>
-    <!-- 引用spring-redis.xml配置文件，如果不加import，则无法识别cacheManager中引用的bean -->
-    <import resource="spring-redis.xml"/>
-
+    <!--<import resource="spring-redis.xml"/>-->
+    
     <!--&lt;!&ndash; 进行Shiro中缓存管理器的配置，现在就实现了EhCache-shiro组件的配置 &ndash;&gt;-->
     <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
         <!--&lt;!&ndash; 配置Ehcache组件要使用的配置文件路径 &ndash;&gt;-->
         <!--<property name="cacheManagerConfigFile" value="classpath:shiro/ehcache.xml"/>-->
     <!--</bean>-->
-    <!-- 进行shiro中缓存管理器的配置，现在是通过RedisCacheManager来实现缓存 -->
     <bean id="cacheManager" class="com.macfu.ssm.utils.cache.manager.RedisCacheManager">
         <property name="connectionFactoryMap">
             <map>
-                <!-- 配置认证缓存连接池 -->
                 <entry key="authenticationCache" value-ref="connectionFactoryAuthentication"/>
-                <!-- 配置授权缓存连接池 -->
                 <entry key="authorizationCache" value-ref="connectionFactoryAuthorization"/>
-                <!-- 配置Session的缓存连接池 -->
                 <entry key="activeSessionCache" value-ref="connectionFactoryActiveSessionCache"/>
             </map>
         </property>

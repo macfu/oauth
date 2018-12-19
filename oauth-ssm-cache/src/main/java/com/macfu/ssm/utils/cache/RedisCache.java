@@ -1,6 +1,6 @@
-package com.macfu.utils.cache;
+package com.macfu.ssm.utils.cache;
 
-import com.macfu.utils.cache.abs.AbstractRedisCache;
+import com.macfu.ssm.utils.cache.abs.AbstractRedisCache;
 
 /**
  * @Author: liming
