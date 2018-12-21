@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @Author: liming
  * @Date: 2018/12/20 10:52
- * @Description: client实体类，可以使用mybatisGenerate生成
+ * @Description: client实体类，应该使用mybatisGenerate生成
  */
 @Data
 public class Client implements Serializable {

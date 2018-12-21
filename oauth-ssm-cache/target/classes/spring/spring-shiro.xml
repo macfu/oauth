@@ -6,19 +6,28 @@
 
     <!-- 定义注解，必须配置好扫描包之后才可以扫描该包中所有类上出现的注解信息 -->
     <context:component-scan base-package="com.macfu"/>
-    <!--<import resource="spring-redis.xml"/>-->
-    
+    <!-- 引用spring-redis.xml配置文件，如果不加import，则无法识别cacheManager中引用的bean -->
+    <import resource="spring-redis.xml"/>
+
     <!--&lt;!&ndash; 进行Shiro中缓存管理器的配置，现在就实现了EhCache-shiro组件的配置 &ndash;&gt;-->
     <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
         <!--&lt;!&ndash; 配置Ehcache组件要使用的配置文件路径 &ndash;&gt;-->
         <!--<property name="cacheManagerConfigFile" value="classpath:shiro/ehcache.xml"/>-->
     <!--</bean>-->
+    <!-- 进行shiro中缓存管理器的配置，现在是通过RedisCacheManager来实现缓存 -->
     <bean id="cacheManager" class="com.macfu.ssm.utils.cache.manager.RedisCacheManager">
         <property name="connectionFactoryMap">
             <map>
+                <!-- 配置认证缓存连接池 -->
                 <entry key="authenticationCache" value-ref="connectionFactoryAuthentication"/>
+                <!-- 配置授权缓存连接池 -->
                 <entry key="authorizationCache" value-ref="connectionFactoryAuthorization"/>
+                <!-- 配置Session的缓存连接池 -->
                 <entry key="activeSessionCache" value-ref="connectionFactoryActiveSessionCache"/>
+                <!-- 配置密码尝试次数的数据库连接 -->
+                <entry key="retryCount" value-ref="connectionFactoryRetryCount"/>
+                <!-- 配置剔除数据的处理操作 -->
+                <entry key="kickout" value-ref="connectionFactoryKickout"/>
             </map>
         </property>
     </bean>
@@ -51,7 +60,11 @@
         <!-- 设置授权缓存的名字，该缓存统一通过RedisCacheManager管理 -->
         <property name="authorizationCacheName" value="authorizationCache"/>
         <property name="credentialsMatcher">
-            <bean class="com.macfu.ssm.realm.matcher.DefaultCredentialsMatcher"/>
+            <bean class="com.macfu.ssm.realm.matcher.DefaultCredentialsMatcher">
+                <property name="cacheManager" ref="cacheManager"/>
+                <property name="expire" value="${shiro.retry.expire}"/>
+                <property name="maxRetryCount" value="${shiro.retry.max}"/>
+            </bean>
         </property>
     </bean>
 
@@ -137,6 +150,8 @@
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
                 <!-- 执行了注销的操作过滤时，会执行次过滤配置类 -->
                 <entry key="logout" value-ref="logoutFilter"/>
+                <!-- 增加踢出重复的Session过滤操作 -->
+                <entry key="kickout" value-ref="kickoutFilter"/>
             </map>
         </property>
         <!-- 定义所有访问路径处理规则 -->
@@ -144,8 +159,19 @@
             <value>
                 /logout.page=logout
                 /loginForm.aciton=authc
-                /pages/**=authc
+                /pages/**=authc,kickout
             </value>
         </property>
     </bean>
+
+    <!-- 定义踢出的过滤器 -->
+    <bean id="kickoutFilter" class="com.macfu.ssm.filter.KickoutSessionControllerFilter">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <!-- 踢出后的路径 -->
+        <property name="kickoutUrl" value="/loginForm.action"/>
+        <!-- 只允许一个用户访问 -->
+        <property name="maxSessionCount" value="1"/>
+    </bean>
+
 </beans>

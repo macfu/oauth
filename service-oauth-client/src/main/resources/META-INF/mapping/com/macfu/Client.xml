@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macfu.oauth.dao.IClientDAO">
+    <select id="findByClientId" parameterType="String" resultType="Client">
+        SELECT clid,client_id as clientId,client_secret as clientSecret
+        FROM client
+        WHERE client_id=#{cid}
+    </select>
+</mapper>
