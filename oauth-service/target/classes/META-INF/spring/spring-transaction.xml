@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="spring-datasource.xml"/>
+    <context:component-scan base-package="com.macfu"/>
+    <!-- 开启事务控制的Annotation支持，该支持针对于指定的事务管理器有效 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 进行事务管理的配置定义，这个配置的ID为tx组件主要使用的事务管理类对象名称 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 事务控制专门提供有切面程序类 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 配置事务控制属性，事务控制是以业务层的方法为主的 -->
+        <tx:attributes>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="create*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="get*" propagation="REQUIRED"/>
+            <!-- 设置了事务传播属性 -->
+            <tx:method name="list*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!-- 定义切面表达式操作 -->
+        <aop:pointcut id="myPointcut" expression="execution(public * com.macfu..service..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
+    </aop:config>
+</beans>

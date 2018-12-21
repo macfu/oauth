@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.macfu"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">
+        <property name="url" value="${db.druid.url}"/>
+        <property name="username" value="${db.druid.username}"/>
+        <property name="password" value="${db.druid.password}"/>
+        <property name="maxActive" value="${db.druid.maxActive}"/>
+        <property name="minIdle" value="${db.druid.minIdle}"/>
+        <property name="initialSize" value="${db.druid.initialSize}"/>
+        <property name="maxWait" value="${db.druid.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${db.druid.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${db.druid.minEvictableIdleTimeMillis}"/>
+        <property name="testWhileIdle" value="${db.druid.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${db.druid.testOnBorrow}"/>
+        <property name="testOnReturn" value="${db.druid.testOnReturn}"/>
+        <property name="poolPreparedStatements" value="${db.druid.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${db.druid.maxPoolPreparedStatementPerConnectionSize}"/>
+        <property name="filters" value="${db.druid.filters}"/>
+    </bean>
+
+    <!-- 在开发之中C3P0数据库连接池使用非常广泛 -->
+    <!-- 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+            <property name="driverClass" value="${db.driverClass}"/>	驱动程序
+            <property name="jdbcUrl" value="${db.jdbcUrl}"/>	连接地址
+            <property name="user" value="${db.user}"/>	用户名
+            <property name="password" value="${db.password}"/>	密码
+            <property name="maxPoolSize" value="${db.maxPoolSize}"/>	设置最大连接
+            <property name="initialPoolSize" value="${db.initialPoolSize}"/>	初始化连接池大小
+            <property name="minPoolSize" value="${db.minPoolSize}"/> 连接池最小的连接数
+            <property name="maxIdleTime" value="${db.maxIdleTime}"/>	最大等待时间
+        </bean>	 -->
+
+    <!-- 此时就将数据库连接对象交由Spring负责管理 -->
+    <!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="org.gjt.mm.mysql.Driver"/>
+            <property name="url" value="jdbc:mysql://localhost:3306/mldn"/>
+            <property name="username" value="root"/>
+            <property name="password" value="mysqladmin"/>
+        </bean> -->
+</beans>
