@@ -15,11 +15,15 @@
         <module>oauth-ssm-base</module>
         <module>oauth-ssm-cache</module>
         <module>service-oauth-client</module>
+        <module>enterprise-oauth-server</module>
     </modules>
 
 
     <properties>
         <enterpriseauth.version>1.0-SNAPSHOT</enterpriseauth.version>
+
+        <!-- oauth开发包 -->
+        <oltu.version>1.0.2</oltu.version>
 
         <lombok.version>1.16.20</lombok.version>
         <oauth2.version>0.0.1</oauth2.version>
@@ -453,6 +457,23 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+
+            <!-- oltu开发包 -->
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.client</artifactId>
+                <version>${oltu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.resourcesserver</artifactId>
+                <version>${oltu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+                <version>${oltu.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
