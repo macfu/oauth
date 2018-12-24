@@ -17,5 +17,6 @@
 					 interface="com.macfu.oauth.service.IMemberService" version="${dubbo.interface.version}" />
 	<dubbo:reference id="clientInstance"
 					 interface="com.macfu.oauth.service.IClientService" version="${dubbo.interface.version}" />
-
+	<dubbo:reference id="memberAuthzInstance"
+					 interface="com.macfu.oauth.service.IMemberAuthzService" version="${dubbo.interface.version}"/>
 </beans>

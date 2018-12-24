@@ -16,7 +16,14 @@
         <module>oauth-ssm-cache</module>
         <module>service-oauth-client</module>
         <module>enterprise-oauth-server</module>
+        <module>enterprise-service-oauth-member</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.macfu</groupId>
+            <artifactId>oauth-api</artifactId>
+        </dependency>
+    </dependencies>
 
 
     <properties>
