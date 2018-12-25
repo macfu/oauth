@@ -21,7 +21,9 @@
                 <!-- 配置密码尝试次数的数据库连接 -->
                 <entry key="retryCount" value-ref="connectionFactoryRetryCount"/>
                 <!-- 追加authcode的缓存处理连接  -->
-                <entry key="authCode" value-ref="connectionFactoryRetryCount"/>
+                <entry key="authCode" value-ref="connectionFactoryAuthcode"/>
+                <!-- 追加token的缓存处理连接  -->
+                <entry key="token" value-ref="connectionFactoryToken"/>
             </map>
         </property>
     </bean>
