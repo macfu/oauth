@@ -17,6 +17,7 @@
         <module>service-oauth-client</module>
         <module>enterprise-oauth-server</module>
         <module>enterprise-service-oauth-member</module>
+        <module>enterpriseauht-oauth-client</module>
     </modules>
     <dependencies>
         <dependency>

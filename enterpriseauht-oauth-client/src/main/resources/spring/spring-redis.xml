@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 首先进行Jedis连接池的相关配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.pool.maxTotal}"/>	<!-- 最大可用连接数 -->
+		<property name="maxIdle" value="${redis.pool.maxIdle}"/>	<!-- 最小维持连接数 -->
+		<property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}"/>	<!-- 最大等待时间 -->
+		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>	<!-- 确保取得可用连接 -->
+	</bean> 
+	<!-- 配置保存的当前用户信息的队列缓存 -->
+	<bean id="connectionFactoryKickout" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig"/>	<!-- 引用进行连接池的配置项 -->
+		<property name="hostName" value="${redis.host}"/>	<!-- Redis的连接地址 -->
+		<property name="port" value="${redis.port}"/>	<!-- Redis的连接端口 -->
+		<property name="password" value="${redis.password}"/>	<!-- 定义的是连接密码，认证密码 -->
+		<property name="timeout" value="${redis.timeout}"/>	<!-- 连接的超时时间 -->
+		<property name="database" value="${redis.db.kickout}"/>
+	</bean>
+	
+	<!-- 配置密码尝试次数的Redis连接池 -->
+	<bean id="connectionFactoryRetryCount" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig"/>	<!-- 引用进行连接池的配置项 -->
+		<property name="hostName" value="${redis.host}"/>	<!-- Redis的连接地址 -->
+		<property name="port" value="${redis.port}"/>	<!-- Redis的连接端口 -->
+		<property name="password" value="${redis.password}"/>	<!-- 定义的是连接密码，认证密码 -->
+		<property name="timeout" value="${redis.timeout}"/>	<!-- 连接的超时时间 -->
+		<property name="database" value="${redis.db.retryCount}"/>
+	</bean>
+	<!-- 配置负责授权缓存的数据库连接池 -->
+	<bean id="connectionFactoryActiveSessionCache" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig"/>	<!-- 引用进行连接池的配置项 -->
+		<property name="hostName" value="${redis.host}"/>	<!-- Redis的连接地址 -->
+		<property name="port" value="${redis.port}"/>	<!-- Redis的连接端口 -->
+		<property name="password" value="${redis.password}"/>	<!-- 定义的是连接密码，认证密码 -->
+		<property name="timeout" value="${redis.timeout}"/>	<!-- 连接的超时时间 -->
+		<property name="database" value="${redis.db.activeSessionCache}"/>
+	</bean>
+	<!-- 配置负责授权缓存的数据库连接池 -->
+	<bean id="connectionFactoryAuthorization" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig"/>	<!-- 引用进行连接池的配置项 -->
+		<property name="hostName" value="${redis.host}"/>	<!-- Redis的连接地址 -->
+		<property name="port" value="${redis.port}"/>	<!-- Redis的连接端口 -->
+		<property name="password" value="${redis.password}"/>	<!-- 定义的是连接密码，认证密码 -->
+		<property name="timeout" value="${redis.timeout}"/>	<!-- 连接的超时时间 -->
+		<property name="database" value="${redis.db.authorization}"/>
+	</bean>  
+	<!-- 配置负责认证缓存的数据库连接池 -->
+	<bean id="connectionFactoryAuthentication" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig"/>	<!-- 引用进行连接池的配置项 -->
+		<property name="hostName" value="${redis.host}"/>	<!-- Redis的连接地址 -->
+		<property name="port" value="${redis.port}"/>	<!-- Redis的连接端口 -->
+		<property name="password" value="${redis.password}"/>	<!-- 定义的是连接密码，认证密码 -->
+		<property name="timeout" value="${redis.timeout}"/>	<!-- 连接的超时时间 -->
+		<property name="database" value="${redis.db.authentication}"/>
+	</bean> 
+</beans>
